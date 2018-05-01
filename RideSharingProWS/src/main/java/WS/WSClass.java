@@ -5,7 +5,6 @@
  */
 package WS;
 
-
 import WSInterfaces.MyUserDao;
 import com.mycompany.ridesharingprows.User;
 import java.util.List;
@@ -23,118 +22,104 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class WSClass {
-    
+
     @RequestMapping("/h")
-    public @ResponseBody String sayHi(){
-    return "hello To my WS";
+    public @ResponseBody
+    String sayHi() {
+        return "hello To my WS";
     }
-    
-    
-    
-    @RequestMapping(value="/getUser/{id}.json",method = RequestMethod.GET)
-    public @ResponseBody User getUserx(@PathVariable(value = "id")Integer id){
-    
+    //--------------------------------------------------------------------------------
+
+    @RequestMapping(value = "/getUser/{id}.json", method = RequestMethod.GET)
+    public @ResponseBody
+    User getUserx(@PathVariable(value = "id") Integer id) {
+
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         MyUserDao inter = context.getBean(MyUserDao.class);
-        
+
         System.out.println(id);
         User u = inter.findByIdUser(id);
 
 //        User u = inter.findByUserName("hegayz");
-
         return u;
-        
+
     }
-    
-    
-    
-    @RequestMapping(value="/getUser/{userName}/{password}.json",method = RequestMethod.GET)
-    
-    
-    public @ResponseBody User getUserx(@PathVariable(value = "userName")String userName,
-            @PathVariable(value = "password") String password){
-        
-        
-    
+//--------------------------------------------------------------------------------
+
+    @RequestMapping(value = "/getUser/{userName}/{password}.json", method = RequestMethod.GET)
+    public @ResponseBody
+    User getUserx(@PathVariable(value = "userName") String userName,
+            @PathVariable(value = "password") String password) {
+
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         MyUserDao inter = context.getBean(MyUserDao.class);
-        
+
         System.out.println(userName);
         User u = inter.LoginAdmin(userName, password);
 
 //        User u = inter.findByUserName("hegayz");
-
         return u;
-        
+
     }
-    
-    
-    
-    
-    @RequestMapping(value="/getUser/pending.json",method = RequestMethod.GET)
-    
-    
-    public @ResponseBody List<User> pending(){
-        
-        
-    
+    //--------------------------------------------------------------------------------
+
+    @RequestMapping(value = "/getUser/pending.json", method = RequestMethod.GET)
+    public @ResponseBody
+    List<User> pending() {
+
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         MyUserDao inter = context.getBean(MyUserDao.class);
-        
+
         List<User> u = inter.getAllPendingUsers();
 
 //        User u = inter.findByUserName("hegayz");
-
         return u;
-        
+
     }
-    
-    
-    
-    @RequestMapping(value="/getUser/AcceptReq/{id}.json",method = RequestMethod.GET)
-    
-    
-    public @ResponseBody String Accept(@PathVariable(value = "id")int id){
-        
-        
-    
+    //--------------------------------------------------------------------------------
+
+    @RequestMapping(value = "/getUser/AcceptReq/{id}.json", method = RequestMethod.GET)
+
+    public @ResponseBody
+    String Accept(@PathVariable(value = "id") int id) {
+
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        MyUserDao inter = context.getBean(MyUserDao.class);      
-        
+        MyUserDao inter = context.getBean(MyUserDao.class);
+
         inter.acceptUser(id);
 
-
         return "Done";
-        
+
     }
-    
-    
-    
-    
-    
-    
-    @RequestMapping(value="/getUser/DenyReq/{id}.json",method = RequestMethod.GET)
-    
-    
-    public @ResponseBody String Deny(@PathVariable(value = "id")int id){
-        
-        
-    
+
+    //--------------------------------------------------------------------------------
+    @RequestMapping(value = "/getUser/DenyReq/{id}.json", method = RequestMethod.GET)
+    public @ResponseBody
+    String Deny(@PathVariable(value = "id") int id) {
+
         ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        MyUserDao inter = context.getBean(MyUserDao.class);      
-        
+        MyUserDao inter = context.getBean(MyUserDao.class);
+
         inter.denyUser(id);
 
-
         return "Done";
-        
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
+    //--------------------------------------------------------------------------------
+
+    @RequestMapping(value = "/getUser/DenyUsers.json", method = RequestMethod.GET)
+    public @ResponseBody
+    List<User> AllDenyUsers() {
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        MyUserDao inter = context.getBean(MyUserDao.class);
+
+        List<User> u = inter.getAllDenyUsers();
+
+//        User u = inter.findByUserName("hegayz");
+        return u;
+
+    }
+
+
 }

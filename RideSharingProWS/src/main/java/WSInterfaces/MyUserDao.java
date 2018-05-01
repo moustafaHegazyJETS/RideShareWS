@@ -32,11 +32,14 @@ public interface MyUserDao extends CrudRepository<User, Integer> {
     @Query("SELECT u FROM User u WHERE u.pending = 0")
     List<User> getAllPendingUsers();
 
+    @Query("SELECT u FROM User u WHERE u.pending = -1")
+    List<User> getAllDenyUsers();
+
     @Modifying
     @Transactional
     @Query("update User u set u.pending = 1 where u.idUser = ?1")
     public void acceptUser(int id);
-    
+
     @Modifying
     @Transactional
     @Query("update User u set u.pending = -1 where u.idUser = ?1")
