@@ -6,9 +6,11 @@
 package com.mycompany.ridesharingprows;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+//import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findByIdUser", query = "SELECT u FROM User u WHERE u.idUser = :idUser")
+    , @NamedQuery(name = "User.findByIdUser", query = "SELECT u FROM User u WHERE u.idUser = ?1")
     , @NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName")
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
     , @NamedQuery(name = "User.findByEMail", query = "SELECT u FROM User u WHERE u.eMail = :eMail")
@@ -80,7 +81,7 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "Birth_Date")
-    @Temporal(TemporalType.DATE)
+//    @Temporal(TemporalType.DATE)
     private Date birthDate;
     @Basic(optional = false)
     @NotNull
@@ -97,8 +98,6 @@ public class User implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "pending")
     private String pending;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userId")
-    private DriverCarInfo driverCarInfo;
 
     public User() {
     }
@@ -168,8 +167,11 @@ public class User implements Serializable {
         this.mobile = mobile;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public String getBirthDate() {
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        String text = df.format(birthDate);
+        System.out.println("The date is: " + text);
+        return text ;
     }
 
     public void setBirthDate(Date birthDate) {
@@ -200,14 +202,6 @@ public class User implements Serializable {
         this.pending = pending;
     }
 
-    public DriverCarInfo getDriverCarInfo() {
-        return driverCarInfo;
-    }
-
-    public void setDriverCarInfo(DriverCarInfo driverCarInfo) {
-        this.driverCarInfo = driverCarInfo;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -232,5 +226,5 @@ public class User implements Serializable {
     public String toString() {
         return "WS.User[ idUser=" + idUser + " ]";
     }
-    
+
 }

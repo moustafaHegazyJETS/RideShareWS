@@ -39,7 +39,8 @@ public class WSClass {
 
         System.out.println(id);
         User u = inter.findByIdUser(id);
-
+        System.out.println("------------------------------------------------");
+         System.out.println(u.getBirthDate());
 //        User u = inter.findByUserName("hegayz");
         return u;
 
@@ -120,6 +121,5 @@ public class WSClass {
         return u;
 
     }
-
 
 }

@@ -5,6 +5,7 @@
  */
 package WSInterfaces;
 
+import com.mycompany.ridesharingprows.DriverCarInfo;
 import com.mycompany.ridesharingprows.User;
 import com.mycompany.ridesharingprows.User;
 import java.io.Serializable;
@@ -20,10 +21,20 @@ import org.springframework.transaction.annotation.Transactional;
  * @author TECHNOLOGY CITY
  */
 @Entity
-public interface MyUserDao extends CrudRepository<User, Integer> {
-
+public interface MyUserDao extends CrudRepository<User,Integer>{
+    
+    //RaniaWork
+    User findByEMail(String email);
+     //----------------------------------------------*
     User findByIdUser(int idUser);
-
+    //-----------------------------------------------*
+    @Query("SELECT u FROM User u WHERE u.eMail = ?1 and u.password = ?2")
+    User findByEMailAndPassword(String email,String password);
+    //-----------------------------------------------*
+    
+    
+    //Mostafa Work
+  
     User findByUserName(String name);
 
     @Query("SELECT u FROM User u WHERE u.userName = ?1 and u.password = ?2 and u.pending = 2")
@@ -44,5 +55,7 @@ public interface MyUserDao extends CrudRepository<User, Integer> {
     @Transactional
     @Query("update User u set u.pending = -1 where u.idUser = ?1")
     public void denyUser(int id);
+    //------------------------------------------------------------*
+
 
 }

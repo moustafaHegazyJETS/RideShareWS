@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author TECHNOLOGY CITY
+ * @author Hossam
  */
 @Entity
 @Table(name = "driver_car_info")
@@ -273,7 +273,7 @@ public class DriverCarInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "WS.DriverCarInfo[ driveCarID=" + driveCarID + " ]";
+        return "com.mycompany.ridesharingprows.DriverCarInfo[ driveCarID=" + driveCarID + " ]";
     }
     
 }
