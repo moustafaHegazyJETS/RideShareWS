@@ -47,15 +47,14 @@ public class DriverWs {
     public DriverCarInfo insertDriverObj(@RequestBody DriverCarInfo driverObj) {
         User user = new User();
         user = driverObj.getUserId();
-        user.setBirthDate((java.sql.Date) new Date());
         user.setPending("0");
-        user.setUserphoto("kkkk");
+        user.setUserphoto("hhhcg");
         System.out.println(user.getUserName());
         userDao.save(user);
         user = userDao.findByEMail(user.getEMail());
         System.out.println("User name   aaaaaaaaaaaaaaaaaaaaa" + user.getUserName());
         driverObj.getUserId().setIdUser(user.getIdUser());
-        driverObj.setLicenseEndDate(new Date());
+//        driverObj.setLicenseEndDate();
         driverDao.save(driverObj);
         return driverObj;
 

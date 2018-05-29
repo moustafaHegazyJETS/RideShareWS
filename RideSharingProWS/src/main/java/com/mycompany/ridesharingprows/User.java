@@ -5,12 +5,14 @@
  */
 package com.mycompany.ridesharingprows;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 //import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,7 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-    , @NamedQuery(name = "User.findByIdUser", query = "SELECT u FROM User u WHERE u.idUser = ?1")
+    , @NamedQuery(name = "User.findByIdUser", query = "SELECT u FROM User u WHERE u.idUser = ?1 ")
     , @NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName")
     , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
     , @NamedQuery(name = "User.findByEMail", query = "SELECT u FROM User u WHERE u.eMail = :eMail")
@@ -80,11 +83,6 @@ public class User implements Serializable {
     private String mobile;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "Birth_Date")
-//    @Temporal(TemporalType.DATE)
-    private Date birthDate;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "User_photo")
     private String userphoto;
@@ -99,6 +97,15 @@ public class User implements Serializable {
     @Column(name = "pending")
     private String pending;
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Birth_Date")
+//    @Temporal(TemporalType.DATE)
+    private String birthDate;
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userId")
+    private DriverCarInfo driverCarInfo;
+
     public User() {
     }
 
@@ -106,7 +113,7 @@ public class User implements Serializable {
         this.idUser = idUser;
     }
 
-    public User(Integer idUser, String userName, String password, String eMail, String gender, String mobile, Date birthDate, String userphoto, String nationalid, String pending) {
+    public User(Integer idUser, String userName, String password, String eMail, String gender, String mobile, String birthDate, String userphoto, String nationalid, String pending) {
         this.idUser = idUser;
         this.userName = userName;
         this.password = password;
@@ -168,13 +175,14 @@ public class User implements Serializable {
     }
 
     public String getBirthDate() {
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        String text = df.format(birthDate);
-        System.out.println("The date is: " + text);
-        return text ;
+//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+//        String text = df.format(birthDate);
+//        System.out.println("The date is: " + text);
+//        return text;
+            return this.birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -225,6 +233,21 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "WS.User[ idUser=" + idUser + " ]";
+    }
+
+//    public java.util.Date getBirthDate() {
+//        return birthDate;
+//    }
+//    public void setBirthDate(java.util.Date birthDate) {
+//        this.birthDate = birthDate;
+//    }
+
+    public DriverCarInfo getDriverCarInfo() {
+        return driverCarInfo;
+    }
+
+    public void setDriverCarInfo(DriverCarInfo driverCarInfo) {
+        this.driverCarInfo = driverCarInfo;
     }
 
 }

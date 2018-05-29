@@ -26,7 +26,7 @@ public class WSClass {
     @RequestMapping("/h")
     public @ResponseBody
     String sayHi() {
-        return "hello To my WS";
+        return "{'moustafa':'hegazy'}";
     }
     //--------------------------------------------------------------------------------
 
@@ -38,9 +38,9 @@ public class WSClass {
         MyUserDao inter = context.getBean(MyUserDao.class);
 
         System.out.println(id);
-        User u = inter.findByIdUser(id);
+        User u = inter.findOne(id);
         System.out.println("------------------------------------------------");
-         System.out.println(u.getBirthDate());
+//         System.out.println(u.getBirthDate());
 //        User u = inter.findByUserName("hegayz");
         return u;
 

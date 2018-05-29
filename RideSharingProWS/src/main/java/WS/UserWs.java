@@ -50,9 +50,9 @@ public class UserWs {
     }
 
     // insert user into DataBase<Registration>-------------------------------------------------
-    @RequestMapping(value = "user", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "user2", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public User InsertUserDB(@RequestParam("file") MultipartFile  uploadedInputStream ,@RequestParam("user") String user) {
+    public User InsertUserDB2(@RequestParam("file") MultipartFile  uploadedInputStream ,@RequestParam("user") String user) {
         
 //        
         
@@ -73,7 +73,7 @@ public class UserWs {
         System.out.println("user insert" + user2.getUserName());
         System.out.println("user insert" + user2.getUserName());
 
-        user2.setBirthDate((java.sql.Date) new Date());
+//        user2.setBirthDate( );
         user2.setPending("0");
         
         
@@ -114,5 +114,32 @@ public class UserWs {
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(target)));
         stream.write(bytes);
         stream.close();
+    }
+    
+    
+    
+      @RequestMapping(value = "/user.json", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public User InsertUserDB(@RequestBody User user) {
+
+        System.out.println("user insert" + user.getUserName());
+        System.out.println("user insert" + user.getEMail());
+
+        System.out.println("user insert" + user.getGender());
+        System.out.println("user insert" + user.getMobile());
+        System.out.println("user insert" + user.getNationalid());
+        System.out.println("user insert" + user.getPassword());
+
+        user.setUserphoto("aaa");
+        System.out.println("user insert" + user.getUserphoto());
+
+        System.out.println("user insert" + user.getUserName());
+        System.out.println("user insert" + user.getUserName());
+
+       // user.setBirthDate(new Date());
+        user.setPending("0");
+        userDao.save(user);
+        System.out.println("user insert" + user.getUserName());
+        return user;
     }
 }

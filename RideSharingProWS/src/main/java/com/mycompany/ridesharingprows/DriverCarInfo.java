@@ -5,17 +5,22 @@
  */
 package com.mycompany.ridesharingprows;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,6 +28,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,7 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DriverCarInfo.findAll", query = "SELECT d FROM DriverCarInfo d")
-    , @NamedQuery(name = "DriverCarInfo.findByDriveCarID", query = "SELECT d FROM DriverCarInfo d WHERE d.driveCarID = :driveCarID")
+    , @NamedQuery(name = "DriverCarInfo.findByDriveCarID", query = "SELECT d FROM DriverCarInfo d WHERE d.driveCarID = ?1")
     , @NamedQuery(name = "DriverCarInfo.findByOwnername", query = "SELECT d FROM DriverCarInfo d WHERE d.ownername = :ownername")
     , @NamedQuery(name = "DriverCarInfo.findByDriverLicenseNum", query = "SELECT d FROM DriverCarInfo d WHERE d.driverLicenseNum = :driverLicenseNum")
     , @NamedQuery(name = "DriverCarInfo.findByOwnerAddress", query = "SELECT d FROM DriverCarInfo d WHERE d.ownerAddress = :ownerAddress")
@@ -112,9 +118,13 @@ public class DriverCarInfo implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "Status")
     private String status;
+    @JsonIgnore
     @JoinColumn(name = "UserId", referencedColumnName = "idUser")
     @OneToOne(optional = false)
     private User userId;
+    
+    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL, mappedBy = "driverId")
+    private Collection<Trip> tripCollection;
 
     public DriverCarInfo() {
     }
@@ -274,6 +284,15 @@ public class DriverCarInfo implements Serializable {
     @Override
     public String toString() {
         return "com.mycompany.ridesharingprows.DriverCarInfo[ driveCarID=" + driveCarID + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Trip> getTripCollection() {
+        return tripCollection;
+    }
+
+    public void setTripCollection(Collection<Trip> tripCollection) {
+        this.tripCollection = tripCollection;
     }
     
 }
