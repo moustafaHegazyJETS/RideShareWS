@@ -102,7 +102,7 @@ public class User implements Serializable {
     @Column(name = "Birth_Date")
 //    @Temporal(TemporalType.DATE)
     private String birthDate;
-    @JsonIgnore
+//    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "userId")
     private DriverCarInfo driverCarInfo;
 

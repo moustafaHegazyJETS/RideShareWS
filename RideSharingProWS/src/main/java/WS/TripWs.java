@@ -10,6 +10,7 @@ import WSInterfaces.MyUserDao;
 import WSInterfaces.TripDao;
 import com.mycompany.ridesharingprows.DriverCarInfo;
 import com.mycompany.ridesharingprows.Trip;
+import com.mycompany.ridesharingprows.User;
 import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -59,6 +60,16 @@ public class TripWs {
 
         List<Trip> t = tripDao.findTripByFromTo(from, to);
         return  t;
+    }
+     //-------------------------------------------------------------------------------------   
+     @RequestMapping(value = "getDriverInfo.json", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+     User getDriverInfo(@RequestBody Trip trip) {//@RequestBody Trip trip
+         System.out.println(trip.getIdTrip());
+         System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+        Trip t = tripDao.findByIdTrip(trip.getIdTrip());
+//        DriverCarInfo i = tripDao.findDriverByTrip(id);
+          return t.getDriverId().getUserId() ;
     }
     
 }

@@ -12,8 +12,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -80,8 +82,11 @@ public class Trip implements Serializable {
     @NotNull
     @Column(name = "numberOfSeats")
     private int numberOfSeats;
-    
-    @JsonBackReference
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cost")
+    private float cost;
+    @JsonIgnore
     @JoinColumn(name = "driverId", referencedColumnName = "UserId")
     @ManyToOne(optional = false)
     private DriverCarInfo driverId;
@@ -160,6 +165,12 @@ public class Trip implements Serializable {
 
     public void setNumberOfSeats(int numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
+    }
+    public float getCost() {
+        return cost;
+    }
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     public DriverCarInfo getDriverId() {

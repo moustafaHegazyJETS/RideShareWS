@@ -7,6 +7,7 @@ package WSInterfaces;
 
 import com.mycompany.ridesharingprows.DriverCarInfo;
 import com.mycompany.ridesharingprows.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -14,7 +15,10 @@ import org.springframework.data.repository.CrudRepository;
  * @author Rania
  */
 public interface DriverDao  extends CrudRepository<DriverCarInfo,Integer> {
-      DriverCarInfo findByDriveCarID(int id);
+    @Query("SELECT d.userId FROM DriverCarInfo d WHERE d.driveCarID = ?1")
+      User findByDriveCarIDs(int id);
       
-    
+      @Query("SELECT u FROM User u WHERE u.idUser = ?1")
+      User findByUserIds(int id);
+      
 }

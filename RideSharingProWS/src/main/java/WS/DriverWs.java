@@ -31,14 +31,15 @@ public class DriverWs {
     MyUserDao userDao = context.getBean(MyUserDao.class);
 
     //----------------------------------------------------------------------------------
-    @RequestMapping(value = "/getCarInfoDB/{driveCarID}.json", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody
-    DriverCarInfo getCarInfo(@PathVariable(value = "driveCarID") int driveCarID) {
-
-        DriverCarInfo carInfo = driverDao.findByDriveCarID(driveCarID);
-        return carInfo;
-
-    }
+//       @RequestMapping(value = "/getCarInfoDBa/{driveCarID}.json", method = RequestMethod.GET, produces = "application/json")
+//    public @ResponseBody
+//    DriverCarInfo getUser(@PathVariable(value = "driveCarID") int driveCarID) {
+//
+//        User u = driverDao.findByUserIds(driveCarID);
+//        DriverCarInfo c = u.getDriverCarInfo();
+//       return c;
+//
+//    }
     //---------------------------DriverSignup Service------------------------------
 
     @RequestMapping(value = "/driverSignUpWs", method = RequestMethod.POST, produces = "application/json")
@@ -59,5 +60,14 @@ public class DriverWs {
         return driverObj;
 
     }
-
+     //----------------------------------------------------------------------------------
+    @RequestMapping(value = "/getDriverCarInfo.json", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+    DriverCarInfo getCarInfo(@RequestBody User u) {
+        System.out.println("ssssssssssssss"+u.getIdUser());
+        User user = driverDao.findByUserIds(u.getIdUser());
+        DriverCarInfo c = u.getDriverCarInfo();
+       return c;
+    }
+    
 }
