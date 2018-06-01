@@ -8,8 +8,10 @@ package WS;
 import WSInterfaces.DriverDao;
 import WSInterfaces.MyUserDao;
 import WSInterfaces.TripDao;
+import WSInterfaces.reservationDao;
 import com.mycompany.ridesharingprows.DriverCarInfo;
 import com.mycompany.ridesharingprows.Trip;
+import com.mycompany.ridesharingprows.TripReservation;
 import com.mycompany.ridesharingprows.User;
 import java.util.List;
 import org.springframework.context.ApplicationContext;
@@ -32,6 +34,7 @@ public class TripWs {
     DriverDao driverDao = context.getBean(DriverDao.class);
     MyUserDao userDao = context.getBean(MyUserDao.class);
     TripDao tripDao=context.getBean(TripDao.class);
+    reservationDao resDao = context.getBean(reservationDao.class);
     
     //----------------------------------------------------------------------------------
     @RequestMapping(value = "/getTrip/{tripId}.json", method = RequestMethod.GET, produces = "application/json")
@@ -72,4 +75,46 @@ public class TripWs {
           return t.getDriverId().getUserId() ;
     }
     
+      //-------------------------------------------------------------------------------------   
+//     @RequestMapping(value = "CehckForSeats.json", method = RequestMethod.POST, produces = "application/json")
+//    public @ResponseBody
+//     String CehckForSeats(@RequestBody int tripId) {//@RequestBody Trip trip
+//         System.out.println(tripId);
+//         System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+//         
+//         
+//            }
+    
+      //-------------------------------------------------------------------------------------   
+     @RequestMapping(value = "registerWithTrip.json", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+     User registerWithTrip(@RequestBody List<Integer> values) {//@RequestBody Trip trip
+         System.out.println("User Id "+values.get(0)+"   trip id  "+values.get(1));
+         System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+         User u = new User();
+         if(resDao.findByTripIdAndUserId(values.get(1),values.get(0))!=null)
+         {
+             u.setEMail("your Are Already register for This Trip");
+             return u;//your Are Already register for This Trip
+         }
+         
+         if(tripDao.checkForAvailableSeats(values.get(1))>0)
+         {
+             TripReservation t = new TripReservation(values.get(1), values.get(0));
+             resDao.save(t);
+             
+             tripDao.updateSeats(values.get(1));
+             
+             System.out.println("DONEEEEEe");
+             u.setEMail("t");
+          return u;
+         }else
+         {
+           u.setEMail("f");
+          return u;    
+         }
+         
+         
+         
+    }
 }

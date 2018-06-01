@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TripReservation.findAll", query = "SELECT t FROM TripReservation t")
-    , @NamedQuery(name = "TripReservation.findByTripId", query = "SELECT t FROM TripReservation t WHERE t.tripReservationPK.tripId = :tripId")
-    , @NamedQuery(name = "TripReservation.findByUserId", query = "SELECT t FROM TripReservation t WHERE t.tripReservationPK.userId = :userId")})
+    , @NamedQuery(name = "TripReservation.findByTripId", query = "SELECT t FROM TripReservation t WHERE t.tripReservationPK.tripId = ?1")
+    , @NamedQuery(name = "TripReservation.findByUserId", query = "SELECT t FROM TripReservation t WHERE t.tripReservationPK.userId = ?1")})
 public class TripReservation implements Serializable {
 
     private static final long serialVersionUID = 1L;

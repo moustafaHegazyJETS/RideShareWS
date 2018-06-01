@@ -86,6 +86,10 @@ public class Trip implements Serializable {
     @NotNull
     @Column(name = "cost")
     private float cost;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "day")
+    private String dayTrip;
     @JsonIgnore
     @JoinColumn(name = "driverId", referencedColumnName = "UserId")
     @ManyToOne(optional = false)
@@ -179,6 +183,12 @@ public class Trip implements Serializable {
 
     public void setDriverId(DriverCarInfo driverId) {
         this.driverId = driverId;
+    }
+     public String getDayTrip() {
+        return dayTrip;
+    }
+    public void setDayTrip(String day) {
+        this.dayTrip = day;
     }
 
     @Override

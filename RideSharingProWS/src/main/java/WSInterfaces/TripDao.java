@@ -9,8 +9,10 @@ import com.mycompany.ridesharingprows.DriverCarInfo;
 import com.mycompany.ridesharingprows.Trip;
 import com.mycompany.ridesharingprows.User;
 import java.util.List;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -28,5 +30,14 @@ public interface TripDao extends CrudRepository<Trip,Integer> {
     
 //    @Query("SELECT d.userId FROM DriverCarInfo d WHERE d.licenseIdPhoto = ?1")
 //    User findUserByDriverID(int id);
+    @Query("select t.numberOfSeats from Trip t where t.idTrip = ?1")
+    int checkForAvailableSeats(int tripId);
+    
+    @Modifying
+    @Transactional
+    @Query("update Trip t set t.numberOfSeats = t.numberOfSeats-1 where t.idTrip = ?1")
+    public void updateSeats(int id);
+    
+    
     
 }
