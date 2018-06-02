@@ -7,6 +7,7 @@ package WS;
 
 import WSInterfaces.MyUserDao;
 import com.google.gson.Gson;
+import com.mycompany.ridesharingprows.DriverCarInfo;
 
 
 import com.mycompany.ridesharingprows.User;
@@ -44,7 +45,16 @@ public class UserWs {
     User getUserByEmailAndPassword(@RequestBody User object) {
         System.out.println("in Methos ByEMailAndPasword eeeeeeeeeeeeeeeeeee");
         User user = userDao.findByEMailAndPassword(object.getEMail(), object.getPassword());
-        System.out.println("user name eeeeeeeeeeeeeeeeeeeeeee" + user.getUserName());
+//        DriverCarInfo d = ;
+        System.out.println("user name eeeeeeee"+user.getIdUser()+"eeeeeeeeeeeeeee" + user.getUserName() + "aaaaaaaaaaaaaaa"+user.getDriverCarInfo().getCarColor());
+
+//        if(!userDao.findByDriveCarIDs(user.getIdUser()).equals(null))
+//        {
+//            System.out.println("TRURRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr");
+////            user.setDriverCarInfo(d);
+//        }
+        
+        System.out.println("user name eeeeeeeeeeeeeeeeeeeeeee" + user.getUserName() + "aaaaaaaaaaaaaaa"+user.getDriverCarInfo());
         return user;
 
     }

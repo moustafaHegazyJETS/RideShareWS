@@ -56,6 +56,8 @@ public interface MyUserDao extends CrudRepository<User,Integer>{
     @Query("update User u set u.pending = -1 where u.idUser = ?1")
     public void denyUser(int id);
     //------------------------------------------------------------*
-
+    
+    @Query("SELECT u.driverCarInfo from User u where u.idUser = ?1")
+      DriverCarInfo findByDriveCarIDs(int id);
 
 }
