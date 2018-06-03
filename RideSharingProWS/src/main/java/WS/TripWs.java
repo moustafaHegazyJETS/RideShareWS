@@ -53,7 +53,14 @@ public class TripWs {
     public @ResponseBody
      List<Trip> getTrips(@RequestBody Trip trip) {
 
-        List<Trip> t = tripDao.findTripByFromTo(trip.getTripFrom(), trip.getTripFrom());
+         System.out.println(trip.getTripTo()+" __________________ "+trip.getTripFrom());
+        List<Trip> t = tripDao.findTripByFromTo(trip.getTripFrom(), trip.getTripTo());
+         for (Trip trip1 : t) {
+             System.out.println(trip1.getTripName());
+         }         
+         System.out.println(trip.getTripTo()+" __________________ "+trip.getTripFrom());
+
+         
         return  t;
     }
      
@@ -62,6 +69,9 @@ public class TripWs {
      List<Trip> getTripsN(@PathVariable(value = "from") String from ,@PathVariable(value = "to") String to) {
 
         List<Trip> t = tripDao.findTripByFromTo(from, to);
+        for (Trip trip1 : t) {
+             System.out.println(trip1.getTripName());
+         }
         return  t;
     }
      //-------------------------------------------------------------------------------------   
@@ -91,7 +101,9 @@ public class TripWs {
          System.out.println(t.getDayTrip());
          System.out.println("dddddddddddddddddddddddddddddddd"+t.getDriverId());
          try{
-             tripDao.save(t);
+             t.setTpast("f");
+             Trip tt =tripDao.save(t);
+             u.setIdTrip(tt.getIdTrip());
              u.setTripTo("Done");
              return u;
          }catch(Exception e)
@@ -123,7 +135,7 @@ public class TripWs {
              
              System.out.println("DONEEEEEe");
              u.setEMail("t");
-          return u;
+          return u; 
          }else
          {
            u.setEMail("f");
@@ -132,5 +144,13 @@ public class TripWs {
          
          
          
+    }
+     @RequestMapping(value = "setTripToBePast.json", method = RequestMethod.POST)
+    public @ResponseBody
+     Void getDriverInfo(@RequestBody Integer id) {//@RequestBody Trip trip
+         System.out.println("inside update Trip");
+         tripDao.updateTripToBePast(id);
+//        DriverCarInfo i = tripDao.findDriverByTrip(id);
+        return null;
     }
 }

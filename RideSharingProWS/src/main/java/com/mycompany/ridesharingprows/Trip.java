@@ -92,6 +92,10 @@ public class Trip implements Serializable {
     @NotNull
     @Column(name = "day")
     private String dayTrip;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "tpast")
+    private String tpast;
     @JsonIgnore
     @JoinColumn(name = "driverId", referencedColumnName = "UserId")
     @ManyToOne(optional = false)
@@ -151,6 +155,13 @@ public class Trip implements Serializable {
 
     public void setTripFrom(String tripFrom) {
         this.tripFrom = tripFrom;
+    }
+    public String getTpast() {
+        return tpast;
+    }
+
+    public void setTpast(String tpast) {
+        this.tpast = tpast;
     }
 
     public String getTripTo() {
