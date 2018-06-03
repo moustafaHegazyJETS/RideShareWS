@@ -22,7 +22,7 @@ public interface TripDao extends CrudRepository<Trip,Integer> {
     
     Trip findByIdTrip (int id);
     
-    @Query("SELECT t FROM Trip t WHERE t.from = ?1 and t.to = ?2 and t.numberOfSeats > 0")
+    @Query("SELECT t FROM Trip t WHERE t.tripFrom = ?1 and t.tripTo = ?2 and t.numberOfSeats > 0")
     List<Trip> findTripByFromTo(String from , String to);
     
     @Query("select t.driverId from Trip t where t.idTrip = ?1")
@@ -38,6 +38,13 @@ public interface TripDao extends CrudRepository<Trip,Integer> {
     @Query("update Trip t set t.numberOfSeats = t.numberOfSeats-1 where t.idTrip = ?1")
     public void updateSeats(int id);
     
-    
+//    @Modifying
+//    @Transactional
+//    @Query("INSERT INTO Trip (idTrip,tripName,details,time,from,to,numberOfSeats,cost,dayTrip,driverId)"
+//            + " VALUES (:id,:name,:details,:time,:from,:to,:number,:cost,:day,:d)")
+//    public void insertTrip(int id,String name , String details ,String time , String from , 
+//            String to , int number , float cost , String day, DriverCarInfo d );
+//   
+  
     
 }

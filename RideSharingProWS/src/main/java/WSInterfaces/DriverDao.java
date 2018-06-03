@@ -21,4 +21,8 @@ public interface DriverDao  extends CrudRepository<DriverCarInfo,Integer> {
       @Query("SELECT u FROM User u WHERE u.idUser = ?1")
       User findByUserIds(int id);
       
+      @Query("SELECT d FROM DriverCarInfo d WHERE d.userId = ?1")
+      DriverCarInfo findByIdUSer(User id);
+      
+      
 }

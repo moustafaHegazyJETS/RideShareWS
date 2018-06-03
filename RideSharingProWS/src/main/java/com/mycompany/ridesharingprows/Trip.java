@@ -42,9 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Trip.findByIdTrip", query = "SELECT t FROM Trip t WHERE t.idTrip = ?1")
     , @NamedQuery(name = "Trip.findByTripName", query = "SELECT t FROM Trip t WHERE t.tripName = :tripName")
     , @NamedQuery(name = "Trip.findByDetails", query = "SELECT t FROM Trip t WHERE t.details = :details")
-    , @NamedQuery(name = "Trip.findByTime", query = "SELECT t FROM Trip t WHERE t.time = :time")
-    , @NamedQuery(name = "Trip.findByFrom", query = "SELECT t FROM Trip t WHERE t.from = :from")
-    , @NamedQuery(name = "Trip.findByTo", query = "SELECT t FROM Trip t WHERE t.to = :to")
+    , @NamedQuery(name = "Trip.findByTripTime", query = "SELECT t FROM Trip t WHERE t.tripTime = ?1")
+    , @NamedQuery(name = "Trip.findByTripFrom", query = "SELECT t FROM Trip t WHERE t.tripFrom = ?1")
+    , @NamedQuery(name = "Trip.findByTripTo", query = "SELECT t FROM Trip t WHERE t.tripTo = ?1")
     , @NamedQuery(name = "Trip.findByNumberOfSeats", query = "SELECT t FROM Trip t WHERE t.numberOfSeats = :numberOfSeats")})
 public class Trip implements Serializable {
 
@@ -65,19 +65,21 @@ public class Trip implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "time")
-    private String time;
+    @Column(name = "ttime")
+    private String tripTime;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
-    @Column(name = "from")
-    private String from;
+    @Column(name = "tfrom")
+    private String tripFrom;
+
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
-    @Column(name = "to")
-    private String to;
+    @Column(name = "tto")
+    private String tripTo;
     @Basic(optional = false)
     @NotNull
     @Column(name = "numberOfSeats")
@@ -105,9 +107,9 @@ public class Trip implements Serializable {
     public Trip(Integer idTrip, String tripName, String time, String from, String to, int numberOfSeats) {
         this.idTrip = idTrip;
         this.tripName = tripName;
-        this.time = time;
-        this.from = from;
-        this.to = to;
+        this.tripTime = time;
+        this.tripFrom = from;
+        this.tripTo = to;
         this.numberOfSeats = numberOfSeats;
     }
 
@@ -135,32 +137,28 @@ public class Trip implements Serializable {
         this.details = details;
     }
 
-    public String getTime() {
-//        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:MM:SS a");
-//        String text = df.format(this.time);
-//        System.out.println("The date is: " + text);
-//        return text ;
-        return time ;
+   public String getTripTime() {
+        return tripTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTripTime(String tripTime) {
+        this.tripTime = tripTime;
     }
 
-    public String getFrom() {
-        return from;
+    public String getTripFrom() {
+        return tripFrom;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setTripFrom(String tripFrom) {
+        this.tripFrom = tripFrom;
     }
 
-    public String getTo() {
-        return to;
+    public String getTripTo() {
+        return tripTo;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setTripTo(String tripTo) {
+        this.tripTo = tripTo;
     }
 
     public int getNumberOfSeats() {

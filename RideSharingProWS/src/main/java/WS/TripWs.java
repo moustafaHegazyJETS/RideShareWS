@@ -53,7 +53,7 @@ public class TripWs {
     public @ResponseBody
      List<Trip> getTrips(@RequestBody Trip trip) {
 
-        List<Trip> t = tripDao.findTripByFromTo(trip.getFrom() , trip.getTo());
+        List<Trip> t = tripDao.findTripByFromTo(trip.getTripFrom(), trip.getTripFrom());
         return  t;
     }
      
@@ -76,14 +76,30 @@ public class TripWs {
     }
     
       //-------------------------------------------------------------------------------------   
-//     @RequestMapping(value = "CehckForSeats.json", method = RequestMethod.POST, produces = "application/json")
-//    public @ResponseBody
-//     String CehckForSeats(@RequestBody int tripId) {//@RequestBody Trip trip
-//         System.out.println(tripId);
-//         System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-//         
-//         
-//            }
+     @RequestMapping(value = "addTrip.json", method = RequestMethod.POST, produces = "application/json")
+    public @ResponseBody
+     Trip addTrip(@RequestBody List<Trip> vals) {//@RequestBody Trip trip
+         System.out.println("56hh555555555555555555555555555555555555555555");
+         Trip u = (Trip) vals.get(0);//t2
+         Trip t = (Trip) vals.get(1);
+         
+         User user = userDao.findByIdUser(u.getIdTrip());
+         System.out.println("))))))))))))))))))))))))"+user.getDriverCarInfo());
+         t.setDriverId(user.getDriverCarInfo());
+         
+         
+         System.out.println(t.getDayTrip());
+         System.out.println("dddddddddddddddddddddddddddddddd"+t.getDriverId());
+         try{
+             tripDao.save(t);
+             u.setTripTo("Done");
+             return u;
+         }catch(Exception e)
+         {
+             u.setTripTo("Error in Saving Object");
+             return u;
+         }
+    }
     
       //-------------------------------------------------------------------------------------   
      @RequestMapping(value = "registerWithTrip.json", method = RequestMethod.POST, produces = "application/json")
