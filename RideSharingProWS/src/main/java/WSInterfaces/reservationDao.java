@@ -18,5 +18,5 @@ public interface reservationDao  extends CrudRepository<TripReservation,Integer>
     
     @Query("SELECT t FROM TripReservation t WHERE t.tripReservationPK.tripId = ?1 and t.tripReservationPK.userId = ?2")
     TripReservation findByTripIdAndUserId(int TripID , int UserID);
-    
+        
 }

@@ -45,19 +45,27 @@ public class DriverWs {
     @RequestMapping(value = "/driverSignUpWs", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
 
-    public DriverCarInfo insertDriverObj(@RequestBody DriverCarInfo driverObj) {
-        User user = new User();
-        user = driverObj.getUserId();
+    public DriverCarInfo insertDriverObj(@RequestBody User user) {
+        
+//        System.out.println("******************"+driverObj.getCarBrand());
+//        System.out.println("**************"+driverObj.getUserId());
+        
+//        User user = new User();
+//        user = driverObj.getUserId();
+        DriverCarInfo temp = user.getDriverCarInfo();
+        user.setDriverCarInfo(null);
         user.setPending("0");
         user.setUserphoto("hhhcg");
         System.out.println(user.getUserName());
-        userDao.save(user);
-        user = userDao.findByEMail(user.getEMail());
-        System.out.println("User name   aaaaaaaaaaaaaaaaaaaaa" + user.getUserName());
-        driverObj.getUserId().setIdUser(user.getIdUser());
-//        driverObj.setLicenseEndDate();
-        driverDao.save(driverObj);
-        return driverObj;
+        User t = userDao.save(user);
+        temp.setUserId(t);
+        DriverCarInfo d = driverDao.save(temp);
+//        user = userDao.findByEMail(user.getEMail());
+//        System.out.println("User name   aaaaaaaaaaaaaaaaaaaaa" + user.getUserName());
+//        driverObj.getUserId().setIdUser(user.getIdUser());
+//        driverObj.setLicenseEndDate("a");
+//        driverDao.save(driverObj);
+        return d;
 
     }
      //----------------------------------------------------------------------------------

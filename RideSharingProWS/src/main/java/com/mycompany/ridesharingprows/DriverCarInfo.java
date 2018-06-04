@@ -78,8 +78,8 @@ public class DriverCarInfo implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "license_EndDate")
-    @Temporal(TemporalType.DATE)
-    private Date licenseEndDate;
+//    @Temporal(TemporalType.DATE)
+    private String licenseEndDate;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 60)
@@ -133,7 +133,7 @@ public class DriverCarInfo implements Serializable {
         this.driveCarID = driveCarID;
     }
 
-    public DriverCarInfo(Integer driveCarID, String ownername, String driverLicenseNum, String ownerAddress, Date licenseEndDate, String carBrand, String carModel, int carYear, int carCC, String carColor, String nationalidPhoto, String licenseIdPhoto, String status) {
+    public DriverCarInfo(Integer driveCarID, String ownername, String driverLicenseNum, String ownerAddress, String licenseEndDate, String carBrand, String carModel, int carYear, int carCC, String carColor, String nationalidPhoto, String licenseIdPhoto, String status) {
         this.driveCarID = driveCarID;
         this.ownername = ownername;
         this.driverLicenseNum = driverLicenseNum;
@@ -181,11 +181,11 @@ public class DriverCarInfo implements Serializable {
         this.ownerAddress = ownerAddress;
     }
 
-    public Date getLicenseEndDate() {
+    public String getLicenseEndDate() {
         return licenseEndDate;
     }
 
-    public void setLicenseEndDate(Date licenseEndDate) {
+    public void setLicenseEndDate(String licenseEndDate) {
         this.licenseEndDate = licenseEndDate;
     }
 
