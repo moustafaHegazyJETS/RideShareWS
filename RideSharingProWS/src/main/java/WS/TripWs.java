@@ -13,6 +13,7 @@ import com.mycompany.ridesharingprows.DriverCarInfo;
 import com.mycompany.ridesharingprows.Trip;
 import com.mycompany.ridesharingprows.TripReservation;
 import com.mycompany.ridesharingprows.User;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -145,6 +146,8 @@ public class TripWs {
          
          
     }
+              //----------------------------------------------------------------------------------
+
      @RequestMapping(value = "setTripToBePast.json", method = RequestMethod.POST)
     public @ResponseBody
      Void getDriverInfo(@RequestBody Integer id) {//@RequestBody Trip trip
@@ -153,4 +156,47 @@ public class TripWs {
 //        DriverCarInfo i = tripDao.findDriverByTrip(id);
         return null;
     }
+              //----------------------------------------------------------------------------------
+
+    @RequestMapping(value = "getTrip.json", method = RequestMethod.POST , produces = "application/json")
+    public @ResponseBody
+         Trip getTrip(@RequestBody Trip trip) {//@RequestBody Trip tri
+         System.out.println("inside Get Trip");
+         Trip t = tripDao.findByIdTrip(trip.getIdTrip());
+         return t;  }
+         //----------------------------------------------------------------------------------
+    @RequestMapping(value = "getReservedUsers.json", method = RequestMethod.POST , produces = "application/json")
+    public @ResponseBody
+         List<User> getReservedUSers(@RequestBody Trip trip) {//@RequestBody Trip tri
+         System.out.println("inside Get Reserved Users");
+         List<Integer> usersIDs = resDao.getReservedUsers(trip.getIdTrip()) ;
+         
+         List<User> users = new ArrayList<>();
+         for (Integer userId : usersIDs) {
+             users.add(userDao.findByIdUser(userId));
+        }
+         
+         return users;  }
+         
+         //-----------------------------------deleteReservation.json
+         
+     @RequestMapping(value = "deleteReservation.json", method = RequestMethod.POST , produces = "application/json")
+    public @ResponseBody
+         Trip deleteReservation(@RequestBody List<Integer> tripAndUserID) {
+            System.out.println("inside delete Reserved Users");
+            Trip t = new Trip();
+            try{
+                resDao.deleteUserReserv(tripAndUserID.get(0), tripAndUserID.get(1));
+                t.setTripName("Done");
+                return t;
+
+            }catch(Exception e)
+            {
+                t.setTripName("Error");
+                e.printStackTrace();
+                return t;
+            }
+            
+            
+         }
 }

@@ -42,7 +42,7 @@ public class DriverWs {
 //    }
     //---------------------------DriverSignup Service------------------------------
 
-    @RequestMapping(value = "/driverSignUpWs", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/driverSi9gnUpWs", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
 
     public DriverCarInfo insertDriverObj(@RequestBody User user) {
